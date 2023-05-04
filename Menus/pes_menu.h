@@ -1,10 +1,10 @@
-#ifndef YUGIOH_MENU_H
-#define YUGIOH_MENU_H
+#ifndef PES_MENU_H
+#define PES_MENU_H
 
 #include "../Techniques/Sequential/sequential.h"
 #include <stdio.h>
 #include <time.h>
-#define NOMBRE_ARCHIVO_YUGIOH "Yu-Gi-Oh-Normal_Monsters.csv"
+#define NOMBRE_ARCHIVO_PES "pes2021-all-players.csv"
 
 using namespace std;
 
@@ -52,7 +52,7 @@ bool esEntero_p(string linea)
 void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
 
-    ifstream archivo(NOMBRE_ARCHIVO_YUGIOH);
+    ifstream archivo(NOMBRE_ARCHIVO_PES);
     string linea;
     char delimitador = ',';
     // Leemos la primea linea para descartarla, pues es el encabezado
@@ -64,28 +64,32 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
 
     while (getline(archivo, linea))
     {
-        int level = 0;
-        int attack = 0;
-        int defense = 0;
+        int height = 0;
+        int weight = 0;
+        int age = 0;
+        int shirt_number = 0;
 
         stringstream stream(linea); //Convertir la cadena a un stream
-        string Name, Attributes, SubType, Level, Attack, Defense;
+        string Shirt_number, Team_name, League, Nationality, Region, Height, Weight, Age, Foot;
         //Extraer todos los valores
-        getline(stream, Name, delimitador);
-        getline(stream, Attributes, delimitador);
-        getline(stream, SubType, delimitador);
-        getline(stream, Attack, delimitador);
-        getline(stream, Defense, delimitador);
+    
+        getline(stream, Team_name, delimitador);
+        getline(stream, League, delimitador);
+        getline(stream, Nationality, delimitador);
+        getline(stream, Region, delimitador);
+        getline(stream, Foot, delimitador);
 
-        stringstream _level(Level);
-        stringstream _attack(Attack);
-        stringstream _defense(Defense);
+        stringstream _height(Height);
+        stringstream _weight(Weight);
+        stringstream _age(Age);
+        stringstream _shirt(Shirt_number);
 
-        _level >> level;
-        _attack >> attack;
-        _defense >> defense;
+        _height >> height;
+        _weight >> weight;
+        _age >> age;
+        _shirt >> shirt_number;
 
-        Record<char[30]> temp(Name, Attributes, SubType, level, attack, defense);
+        Record<char[30]> temp(Shirt_number, Team_name, League, Nationality, Region, Height, Weight, Age, Foot);
 
         //guardar en vector
         records.push_back(temp);
@@ -152,24 +156,34 @@ void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq)
 void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
     cout << "\n\n----------Insertar----------\n\n";
-    string nombre;
-    string atributo;
-    string subtipo;
+    string team_name;
+    string league;
+    string nationality;
+    string region;
+    string foot;
     clock_t t;
-    int nivel, ataque, defensa;
+    int shirt_number, height, weight, age;
 
-    cout << "Ingrese el Nombre (30 carac. max): ";
-    cin >> nombre;
-    cout << "Ingrese el tipo (8 carac. max): ";
-    cin >> atributo;
-    cout << "Ingrese el nivel: ";
-    cin >> nivel;
-    cout << "Ingrese la ataque: ";
-    cin >> ataque;
-    cout << "Ingrese la defensa: ";
-    cin >> defensa;
+    cout << "Ingrese el Nombre del equipo (20 carac. max): ";
+    cin >> team_name;
+    cout << "Ingrese la liga (30 carac. max): ";
+    cin >> league;
+    cout << "Ingrese la nacionalidad (20 carac. max): ";
+    cin >> nationality;
+    cout << "Ingrese la region (20 carac. max): ";
+    cin >> region;
+    cout << "Ingrese el pie (10 carac. max): ";
+    cin >> foot;
+    cout << "Ingrese el numero de camiseta: ";
+    cin >> shirt_number;
+    cout << "Ingrese la altura: ";
+    cin >> height;
+    cout << "Ingrese el peso: ";
+    cin >> weight;
+    cout << "Ingrese la edad: ";
+    cin >> age;
     t = clock();
-    Record<char[30]> rec(toLower(nombre), toLower(atributo),toLower(subtipo), nivel, ataque, defensa);
+    Record<char[30]> rec(toLower(team_name), toLower(league),toLower(nationality), toLower(region), toLower(foot), shirt_number, height, weight, age);
     int accesos = 0;
     seq.insert(rec, accesos);
 

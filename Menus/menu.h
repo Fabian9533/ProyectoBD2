@@ -8,10 +8,10 @@
 #include <string>
 #include <cctype>
 #include <cstdlib>
-#include "yugioh_menu.h"
+#include "meta_menu.h"
 #include "../Techniques/Sequential/sequential.h"
 #include "../Techniques/DynamicHash/extendibleHash.h"
-#include "lol_menu.h"
+#include "pes_menu.h"
 
 #define salto cout << endl
 

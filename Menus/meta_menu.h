@@ -1,8 +1,8 @@
-#ifndef LOL_MENU_H
-#define LOL_MENU_H
+#ifndef META_MENU_H
+#define META_MENU_H
 
 #include "../Techniques/DynamicHash/extendibleHash.h"
-#define NOMBRE_ARCHIVO_LOL "Lol.csv"
+#define NOMBRE_ARCHIVO_META "VideojuegosMetacritic.csv"
 #include <stdio.h>
 #include <time.h>
 
@@ -49,7 +49,7 @@ void post_insertar_aleatorio_hash(ExtendibleHash<int> &eh);
 void insertar_hash(ExtendibleHash<int> &eh)
 {
 
-    ifstream archivo(NOMBRE_ARCHIVO_LOL);
+    ifstream archivo(NOMBRE_ARCHIVO_META);
     string linea;
     clock_t t;
     char delimitador = ';';
@@ -60,23 +60,21 @@ void insertar_hash(ExtendibleHash<int> &eh)
     while (getline(archivo, linea))
     {
         stringstream stream(linea); //Convertir la cadena a un stream
-        string championCode, championName, championClass, championRole, championTier, championScore, winRate, rolRate, pickRate, banRate, championTrend, championKda;
+        string gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, gameScore, userScore, gameCritics, gameUsers;
         //Extraer todos los valores
-        getline(stream, championCode, delimitador);
-        getline(stream, championName, delimitador);
-        getline(stream, championClass, delimitador);
-        getline(stream, championRole, delimitador);
-        getline(stream, championTier, delimitador);
-        getline(stream, championScore, delimitador);
-        getline(stream, winRate, delimitador);
-        getline(stream, rolRate, delimitador);
-        getline(stream, pickRate, delimitador);
-        getline(stream, banRate, delimitador);
-        getline(stream, championTrend, delimitador);
-        getline(stream, championKda, delimitador);
 
-        
-        RecordHash<int> temp(stoi(championCode), championName, championClass, championRole, championTier, stof(championScore), winRate, rolRate, pickRate, banRate, stof(championTrend), stof(championKda));
+        getline(stream, gameName, delimitador);
+        getline(stream, gamePlatform, delimitador);
+        getline(stream, releaseDate, delimitador);
+        getline(stream, gameDeveloper, delimitador);
+        getline(stream, gameGenre, delimitador);
+        getline(stream, gamePlayers, delimitador);
+        getline(stream, gameScore, delimitador);
+        getline(stream, userScore, delimitador);
+        getline(stream, gameCritics, delimitador);
+        getline(stream, gameUsers, delimitador);
+       
+        RecordHash<int> temp(gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, stoi(gameScore), stof(userScore), stoi(gameCritics), stoi(gameUsers));
         records.push_back(temp);
     }
 
@@ -98,7 +96,7 @@ void post_insertar_aleatorio_hash(ExtendibleHash<int> &eh)
     do
     {
         cout << "\e[1;1H\e[2J";
-        cout << "Se insertaron los datos existosamente" << endl;
+        cout << "Se insertaron los datos exitosamente" << endl;
         cout << endl;
         cout << "Deseas verlos?" << endl;
         cout << "-> Elige un numero" << endl;
@@ -137,37 +135,35 @@ void insertar_registro_hash(ExtendibleHash<int> &eh)
 {
     
     cout << "\n\n----------Insertar----------\n\n";
-    int championCode;
-    string championName, championClass, championRole, championTier, winRate, rolRate, pickRate, banRate;
-    float championScore, championTrend, championKda;
+    int gameScore, gameCritics, gameUsers;
+    string gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers;
+    float userScore;
     clock_t t;
-    cout << "Ingrese el codigo del campeon: ";
-    cin >> championCode;
-    cout << "Ingrese el nombre del campeon[max 15 char]: ";
-    cin >> championName;
-    cout << "Ingrese la clase del campeon[max ]: ";
-    cin >> championClass;
-    cout << "Ingrese el rol del campeon[max ]: ";
-    cin >> championRole;
-    cout << "Ingrese el tier del campeon[1 char (A,B,C,D,S)]: ";
-    cin >> championTier;
-    cout << "Ingrese el win rate del campeon: ";
-    cin >> winRate;
-    cout << "Ingrese el rol rate del campeon: ";
-    cin >> rolRate;
-    cout << "Ingrese el pick rate del campeon: ";
-    cin >> pickRate;
-    cout << "Ingrese el ban rate del campeon: ";
-    cin >> banRate;
+    cout << "Ingrese el nombre: ";
+    cin >> gameName;
+    cout << "Ingrese la plataforma: ";
+    cin >> gamePlatform;
+    cout << "Ingrese el dia de lanzamiento: ";
+    cin >> releaseDate;
+    cout << "Ingrese el desarrollador: ";
+    cin >> gameDeveloper;
+    cout << "Ingrese el genero del juego: ";
+    cin >> gameGenre;
+    cout << "Ingrese el estilo de juego(multiplcayer o no/ 1 o dos jugadores): ";
+    cin >> gamePlayers;
+    cout << "Ingrese el puntaje del juego: ";
+    cin >> gameScore;
+    cout << "Ingrese el numero de criticas: ";
+    cin >> gameCritics;
+    cout << "Ingrese el numero de usuarios: ";
+    cin >> gameUsers;
     cout << "Ingrese el score del campeon: ";
-    cin >> championScore;
-    cout << "Ingrese el trend del campeon: ";
-    cin >> championTrend;
-    cout << "Ingrese el kda del campeon: ";
-    cin >> championKda;
-    RecordHash<int> temp(championCode, championName, championClass, championRole, championTier, championScore, winRate, rolRate, pickRate, banRate, championTrend, championKda);
+    cin >> userScore;
+    cout << "Ingrese el numero de usuarios: ";
 
-    RecordHash<int> rec(championCode, championName, championClass, championRole, championTier, championScore, winRate, rolRate, pickRate, banRate, championTrend, championKda);
+    RecordHash<int> temp(gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, gameScore, userScore, gameCritics, gameUsers);
+
+    RecordHash<int> rec(gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, gameScore, userScore, gameCritics, gameUsers);
     int accesos = 1;
     t = clock();
     eh.insert(rec, accesos);
