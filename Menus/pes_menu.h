@@ -73,6 +73,7 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
         string Name, Team_name, League, Nationality, Region, Height, Weight, Age, Foot;
         //Extraer todos los valores
     
+        getline(stream, Name, delimitador);
         getline(stream, Team_name, delimitador);
         getline(stream, League, delimitador);
         getline(stream, Nationality, delimitador);
