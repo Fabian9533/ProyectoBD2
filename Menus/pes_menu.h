@@ -70,7 +70,7 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
         int shirt_number = 0;
 
         stringstream stream(linea); //Convertir la cadena a un stream
-        string Shirt_number, Team_name, League, Nationality, Region, Height, Weight, Age, Foot;
+        string Name, Team_name, League, Nationality, Region, Height, Weight, Age, Foot;
         //Extraer todos los valores
     
         getline(stream, Team_name, delimitador);
@@ -79,17 +79,17 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
         getline(stream, Region, delimitador);
         getline(stream, Foot, delimitador);
 
-        stringstream _height(Height);
-        stringstream _weight(Weight);
-        stringstream _age(Age);
-        stringstream _shirt(Shirt_number);
+        stringstream _height(height);
+        stringstream _weight(weight);
+        stringstream _age(age);
+        stringstream _shirt(shirt_number);
 
         _height >> height;
         _weight >> weight;
         _age >> age;
         _shirt >> shirt_number;
 
-        Record<char[30]> temp(Shirt_number, Team_name, League, Nationality, Region, Height, Weight, Age, Foot);
+        Record<char[30]> temp(Name, shirt_number, Team_name, League, Nationality, Region, height, weight, age, Foot);
 
         //guardar en vector
         records.push_back(temp);
@@ -156,6 +156,7 @@ void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq)
 void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
     cout << "\n\n----------Insertar----------\n\n";
+    string name;
     string team_name;
     string league;
     string nationality;
@@ -164,6 +165,8 @@ void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
     clock_t t;
     int shirt_number, height, weight, age;
 
+    cout << "Ingrese el Nombre del jugador (30 carac. max): ";
+    cin >> name;
     cout << "Ingrese el Nombre del equipo (20 carac. max): ";
     cin >> team_name;
     cout << "Ingrese la liga (30 carac. max): ";
@@ -183,7 +186,7 @@ void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
     cout << "Ingrese la edad: ";
     cin >> age;
     t = clock();
-    Record<char[30]> rec(toLower(team_name), toLower(league),toLower(nationality), toLower(region), toLower(foot), shirt_number, height, weight, age);
+    Record<char[30]> rec(name, shirt_number, toLower(team_name), toLower(league),toLower(nationality), toLower(region), height, weight, age, toLower(foot));
     int accesos = 0;
     seq.insert(rec, accesos);
 
