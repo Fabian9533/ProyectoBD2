@@ -44,9 +44,9 @@ bool esEntero_r(string linea)
 
     return esEntero;
 }
-void post_insertar_aleatorio_hash(ExtendibleHash<int> &eh);
+void post_insertar_aleatorio_hash(ExtendibleHash<string> &eh);
 
-void insertar_hash(ExtendibleHash<int> &eh)
+void insertar_hash(ExtendibleHash<string> &eh)
 {
 
     ifstream archivo(NOMBRE_ARCHIVO_META);
@@ -55,7 +55,7 @@ void insertar_hash(ExtendibleHash<int> &eh)
     char delimitador = ';';
     // Leemos la primea linea para descartarla, pues es el encabezado
     getline(archivo, linea);
-    vector<RecordHash<int>> records;
+    vector<RecordHash<string>> records;
     // Leemos todos las linea
     while (getline(archivo, linea))
     {
@@ -74,7 +74,7 @@ void insertar_hash(ExtendibleHash<int> &eh)
         getline(stream, gameCritics, delimitador);
         getline(stream, gameUsers, delimitador);
        
-        RecordHash<int> temp(gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, stoi(gameScore), stof(userScore), stoi(gameCritics), stoi(gameUsers));
+        RecordHash<string> temp(gameName, gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, stoi(gameScore), stof(userScore), stoi(gameCritics), stoi(gameUsers));
         records.push_back(temp);
     }
 
@@ -131,7 +131,7 @@ void post_insertar_aleatorio_hash(ExtendibleHash<int> &eh)
     dump();
 }
 
-void insertar_registro_hash(ExtendibleHash<int> &eh)
+void insertar_registro_hash(ExtendibleHash<string> &eh)
 {
     
     cout << "\n\n----------Insertar----------\n\n";
@@ -161,9 +161,9 @@ void insertar_registro_hash(ExtendibleHash<int> &eh)
     cin >> userScore;
     cout << "Ingrese el numero de usuarios: ";
 
-    RecordHash<int> temp(gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, gameScore, userScore, gameCritics, gameUsers);
+    RecordHash<string> temp(gameName, gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, gameScore, userScore, gameCritics, gameUsers);
 
-    RecordHash<int> rec(gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, gameScore, userScore, gameCritics, gameUsers);
+    RecordHash<string> rec(gameName, gameName, gamePlatform, releaseDate, gameDeveloper, gameGenre, gamePlayers, gameScore, userScore, gameCritics, gameUsers);
     int accesos = 1;
     t = clock();
     eh.insert(rec, accesos);
