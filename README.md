@@ -99,18 +99,6 @@ Para obtener los accesos a memoria secundaria dentro de las funciones especifica
 | Extendible Hash | 2 | 2 | 2 | 2 | 2 |
 
 
-### Gráficos de comparación
-
-#### Tiempo de ejecución
-<img src="/imagenes/insercion.jpg" width="600">
-<img src="/imagenes/search.jpg" width="600">
-<img src="/imagenes/range_search.jpg" width="600">
-
-#### Accesos a memoria secundaria
-
-<img src="/imagenes/insercion_accesos.jpg" width="600">
-<img src="/imagenes/search_accesos.jpg" width="600">
-
 ## Discusión y análisis de resultados experimentales
 Los resultados experimentales muestran que entre ambas técnicas de almacenamiento de datos, existen diferencias significativas en sus tiempos de ejecución acorde a la funcionalidad que se requiera.
 Por un lado, tenemos que el “Extendible Hash” tiene una diferencia significativa de tiempo de inserción masiva en comparación con el “Sequential File”, esto se debe a que la función hash puede crear “buckets” que no se llenen de datos, cuando se tiene a otros con muchos “linked buckets”, incrementando el tiempo de ejecución mientras más datos se inserten a la vez. Por lo que, el “Sequential File” muestra un mejor rendimiento en este aspecto, porque los archivos son ordenados antes de ser escritos, y no se separan espacios innecesarios al momento de escribir los registros.
