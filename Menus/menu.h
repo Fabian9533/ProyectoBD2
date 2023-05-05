@@ -8,10 +8,10 @@
 #include <string>
 #include <cctype>
 #include <cstdlib>
-#include "meta_menu.h"
+#include "yugioh_menu.h"
 #include "../Techniques/Sequential/sequential.h"
 #include "../Techniques/DynamicHash/extendibleHash.h"
-#include "rs6_menu.h"
+#include "lol_menu.h"
 
 #define salto cout << endl
 
@@ -57,9 +57,9 @@ bool esEntero(string linea)
 }
 
 
-void menu_principal(Sequential<Record<int>, string> &seq, ExtendibleHash<int> &eh);
+void menu_principal(Sequential<Record<char[30]>, string> &seq, ExtendibleHash<int> &eh);
 
-void rs6(Sequential<Record<int>, string> &seq)
+void yugioh(Sequential<Record<char[30]>, string> &seq)
 {
     string input;
     int opcion;
@@ -67,7 +67,7 @@ void rs6(Sequential<Record<int>, string> &seq)
     do
     {
         cout << "\e[1;1H\e[2J";
-        cout << "Elegiste la tabla RS6" << endl;
+        cout << "Elegiste la tabla Yu-Gi-Oh" << endl;
         salto;
         cout << "¿Que accion quieres realizar?" << endl;
         cout << "-> Elige un numero" << endl;
@@ -125,12 +125,12 @@ void rs6(Sequential<Record<int>, string> &seq)
         exit(-1);
         break;
     default:
-        rs6(seq);
+        yugioh(seq);
         break;
     }
 }
 
-void VGS(ExtendibleHash<int> &eh)
+void Lol(ExtendibleHash<int> &eh)
 {
     string input;
     int opcion;
@@ -138,7 +138,7 @@ void VGS(ExtendibleHash<int> &eh)
     do
     {
         cout << "\e[1;1H\e[2J";
-        cout << "Elegiste la tabla Video Games Sales" << endl;
+        cout << "Elegiste la tabla League of Legends" << endl;
         salto;
         cout << "Que accion quieres realizar?" << endl;
         cout << "-> Elige un numero" << endl;
@@ -191,12 +191,12 @@ void VGS(ExtendibleHash<int> &eh)
         exit(-1);
         break;
     default:
-        VGS(eh);
+        Lol(eh);
         break;
     }
 }
 
-void menu_principal(Sequential<Record<int>, string> &seq, ExtendibleHash<int> &eh)
+void menu_principal(Sequential<Record<char[30]>, string> &seq, ExtendibleHash<int> &eh)
 {
 
     while (1)
@@ -220,9 +220,9 @@ cout<<" " << endl;
             cout << "-> Elige un numero" << endl;
             salto;
             salto;
-            cout << "1. Rainbow 6 - Secuencial" << endl;
+            cout << "1. Yu-Gi-Oh! - Secuencial" << endl;
             salto;
-            cout << "2. Video Games Sales - Extendible Hash" << endl;
+            cout << "2. LeagueofLegends - Extendible Hash" << endl;
             salto;
             cout << "3. Salir" << endl;
             salto;
@@ -239,10 +239,10 @@ cout<<" " << endl;
         switch (opcion)
         {
         case 1:
-            rs6(seq);
+            yugioh(seq);
             break;
         case 2:
-            VGS(eh);
+            Lol(eh);
             break;
         case 3:
             exit(-1);

@@ -1,14 +1,14 @@
-#ifndef RS6_MENU_H
-#define RS6_MENU_H
+#ifndef YUGIOH_MENU_H
+#define YUGIOH_MENU_H
 
 #include "../Techniques/Sequential/sequential.h"
 #include <stdio.h>
 #include <time.h>
-#define NOMBRE_ARCHIVO_RS6 "rs6_clean.csv"
+#define NOMBRE_ARCHIVO_YUGIOH "Yu-Gi-Oh-Normal_Monsters.csv"
 
 using namespace std;
 
-void post_insertar_aleatorio(Sequential<Record<int>, string> &seq);
+void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq);
 
 bool esEntero_p(string linea)
 {
@@ -49,69 +49,44 @@ bool esEntero_p(string linea)
     return esEntero;
 }
 
-void insertar_secuencial(Sequential<Record<int>, string> &seq)
+void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
 
-    ifstream archivo(NOMBRE_ARCHIVO_RS6);
+    ifstream archivo(NOMBRE_ARCHIVO_YUGIOH);
     string linea;
     char delimitador = ',';
     // Leemos la primea linea para descartarla, pues es el encabezado
     getline(archivo, linea);
-    vector<Record<int>> records;
+    vector<Record<char[30]>> records;
 
     // Leemos todos las linea
     clock_t t;
 
     while (getline(archivo, linea))
     {
-        int id = 0;
-        int kills = 0;
-        int deaths = 0;
-        int wins = 0;
-        int losses = 0;
-        int xp = 0;
-        int headshots = 0;
-        int melee_kills = 0;
-        int games_played = 0;
+        int level = 0;
+        int attack = 0;
+        int defense = 0;
 
         stringstream stream(linea); //Convertir la cadena a un stream
-        string Id, Player_name, Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played;
+        string Name, Attributes, SubType, Level, Attack, Defense;
         //Extraer todos los valores
+        getline(stream, Name, delimitador);
+        getline(stream, Attributes, delimitador);
+        getline(stream, SubType, delimitador);
+        getline(stream, Attack, delimitador);
+        getline(stream, Defense, delimitador);
 
-        getline(stream, Id, delimitador);
+        stringstream _level(Level);
+        stringstream _attack(Attack);
+        stringstream _defense(Defense);
 
-        getline(stream, Player_name, delimitador);
-        getline(stream, Kills, delimitador);
-        getline(stream, Deaths, delimitador);
-        getline(stream, Wins, delimitador);
-        getline(stream, Losses, delimitador);
-        getline(stream, Xp, delimitador);
-        getline(stream, Headshots, delimitador);
-        getline(stream, Melee_kills, delimitador);
-        getline(stream, Games_played, delimitador);
+        _level >> level;
+        _attack >> attack;
+        _defense >> defense;
 
-        stringstream _id(Id);
-        stringstream _kills(Kills);
-        stringstream _deaths(Deaths);
-        stringstream _wins(Wins);
-        stringstream _losses(Losses);
-        stringstream _xp(Xp);
-        stringstream _heahshots(Headshots);
-        stringstream _meleekills(Melee_kills);
-        stringstream _gamesplayed(Games_played);
+        Record<char[30]> temp(Name, Attributes, SubType, level, attack, defense);
 
-        _id >> Id;
-        _kills >> Kills;
-        _deaths >> Deaths;
-        _wins >> Wins;
-        _losses >> Losses;
-        _xp >> Xp;
-        _heahshots >> Headshots;
-        _meleekills >> Melee_kills;
-        _gamesplayed >> Games_played;
-        
-
-        Record<int> temp(id, Player_name, kills, deaths, wins, losses, xp , headshots, melee_kills, games_played);
         //guardar en vector
         records.push_back(temp);
     }
@@ -126,7 +101,7 @@ void insertar_secuencial(Sequential<Record<int>, string> &seq)
     post_insertar_aleatorio(seq);
 }
 
-void post_insertar_aleatorio(Sequential<Record<int>, string> &seq)
+void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq)
 {
 
     string input;
@@ -174,35 +149,27 @@ void post_insertar_aleatorio(Sequential<Record<int>, string> &seq)
     }
     dump();
 }
-void insertar_registro_secuencial(Sequential<Record<int>, string> &seq)
+void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
     cout << "\n\n----------Insertar----------\n\n";
-    string player_name;
+    string nombre;
+    string atributo;
+    string subtipo;
     clock_t t;
-    int Id, Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played;
+    int nivel, ataque, defensa;
 
-
-    cout << "Ingrese el id: ";
-    cin >> Id;
-    cout << "Ingrese el Nombre del jugador (30 carac. max): ";
-    cin >> player_name;
-    cout << "Ingrese el numero de asesinatos: ";
-    cin >> Kills;
-    cout << "Ingrese el numero de muertes: ";
-    cin >> Deaths;
-    cout << "Ingrese el numero de partidas ganadas: ";
-    cin >> Wins;
-    cout << "Ingrese el numero de partidas perdidas: ";
-    cin >> Losses;
-    cout << "Ingrese la experiencia: ";
-    cin >> Xp;
-    cout << "Ingrese el numero de muertes a melee: ";
-    cin >> Melee_kills;
-    cout << "Ingrese el numero de partidas jugadas: ";
-    cin >> Games_played;
-   
+    cout << "Ingrese el Nombre (30 carac. max): ";
+    cin >> nombre;
+    cout << "Ingrese el tipo (8 carac. max): ";
+    cin >> atributo;
+    cout << "Ingrese el nivel: ";
+    cin >> nivel;
+    cout << "Ingrese la ataque: ";
+    cin >> ataque;
+    cout << "Ingrese la defensa: ";
+    cin >> defensa;
     t = clock();
-    Record<int> rec(Id, toLower(player_name),Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played);
+    Record<char[30]> rec(toLower(nombre), toLower(atributo),toLower(subtipo), nivel, ataque, defensa);
     int accesos = 0;
     seq.insert(rec, accesos);
 
@@ -215,7 +182,7 @@ void insertar_registro_secuencial(Sequential<Record<int>, string> &seq)
     dump();
 }
 
-void buscar_registro_secuencial(Sequential<Record<int>, string> &seq)
+void buscar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
     cout << "\n\n----------Busqueda----------\n\n";
     cout << "Ingrese nombre a buscar: ";
@@ -241,7 +208,7 @@ void buscar_registro_secuencial(Sequential<Record<int>, string> &seq)
     }
     dump();
 }
-void buscar_rango_registro_secuencial(Sequential<Record<int>, string> &seq)
+void buscar_rango_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
     cout << "\n\n----------Busqueda por rango----------\n\n";
     string key1, key2;
@@ -272,7 +239,7 @@ void buscar_rango_registro_secuencial(Sequential<Record<int>, string> &seq)
     dump();
 }
 
-void eliminar_registro_secuencial(Sequential<Record<int>, string> &seq)
+void eliminar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
     cout << "\n\n----------Eliminar----------\n\n";
     cout << "Ingrese codigo a eliminar: ";
@@ -289,7 +256,7 @@ void eliminar_registro_secuencial(Sequential<Record<int>, string> &seq)
     dump();
 }
 
-void showData(Sequential<Record<int>, string> &seq)
+void showData(Sequential<Record<char[30]>, string> &seq)
 {
     seq.showRecords();
     dump();
