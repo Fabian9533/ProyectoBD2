@@ -161,7 +161,9 @@ void Lol(ExtendibleHash<int> &eh)
         salto;
         cout << "6. Eliminar un registro" << endl;
         salto;
-        cout << "7. Salir" << endl;
+        cout << "7. Insertar Sentencia SQL" << endl;
+        salto;
+        cout << "8. Salir" << endl;
         salto;
 
         getline(cin, input);
@@ -193,6 +195,9 @@ void Lol(ExtendibleHash<int> &eh)
         eliminar_registro_hash(eh);
         break;
     case 7:
+        insertar_parser_hash(eh);
+        break;
+    case 8:
         exit(-1);
         break;
     default:
