@@ -33,28 +33,25 @@ El objetivo del siguiente proyecto es implementar un Sistema Gestor de Base de D
 
 ## **Extendible Hash**
 <!--- >Explicación de la técnica <--->
-Para el almacenamiento de datos se hará uso del funcionamiento de una tabla hash, por lo que dentro de la estructura se hará uso de la función hash proporcionada por el compilador de C ++, lo cual generará cadenas de bits como index para almacenar los registros dentro de los archivos.
-
+Se utilizará una tabla hash para almacenar datos, donde la función hash proporcionada por el compilador de C ++ generará cadenas de bits como índices para guardar registros en archivos. Las funciones de inserción, eliminación y búsqueda funcionan de la siguiente manera:
 <!--- >Funcionamiento de inserción, eliminación y búsqueda <--->
 Dentro de las funciones tales como inserción, eliminación y búsqueda, su funcionamiento es el siguiente.
 
 <!--- >Manejo de memoria secundaria <--->
-En el archivo "index" se encuentran todos los índices de la estructura, el cual contiene 2^D índices, los cuales apuntan a algún bucket en el archivo de datos. En el archivo de datos, tenemos a los buckets, teniendo en cada uno, un número de registros determinado como máximo, y un número de registros insertados. Cada bucket tiene un ‘D’(Profundidad) local. Cuando se sobrepasa su cantidad máxima de registros del bucket, se divide el índice, se crea un nuevo bucket y se aumenta en uno la profundidad local. Si su profundidad es igual al ‘D’ determinado, entonces se crea un linked bucket, después se consulta al Freelist para verificar si hay buckets eliminados para agregar el linked bucket en dicho espacio, caso contrario se escribe al final del archivo linkeando con el bucket correspondiente.
+En el archivo "índice", se encuentran todos los índices de la estructura, que consta de 2^D índices que apuntan a un bucket en el archivo de datos. Los buckets tienen un número máximo de registros y un número de registros insertados. Cada bucket tiene una profundidad local 'D'. Cuando se excede la cantidad máxima de registros en un bucket, se divide el índice, se crea un nuevo bucket y se aumenta en uno la profundidad local. Si su profundidad es igual al valor determinado 'D', entonces se crea un linked bucket. Se consulta al Freelist para verificar si hay buckets eliminados para agregar el linked bucket en dicho espacio. En caso contrario, se escribe al final del archivo linkeando con el bucket correspondiente.
 
-Además, al eliminar registros, se verifica si se vacía el bucket al eliminar el registro. Además, se verifica si se pueden unir los buckets, en ese caso se hace la unión y se disminuye la profundidad local. Por otro lado, los buckets eliminados se registran con un FreeList, con estrategia LIFO. Por ultimo, la cabecera del FreeList se guarda al inicio del archivo de índices.
+Al eliminar registros, se verifica si se vacía el bucket al eliminar el registro. Además, se comprueba si es posible unir los buckets. En ese caso, se realiza la unión y se disminuye la profundidad local. Los buckets eliminados se registran en un Freelist, que utiliza una estrategia LIFO. Finalmente, la cabecera del Freelist se guarda al inicio del archivo de índices.
  
 ## **Sequential File**
 <!--- >Explicación de la técnica <--->
-Para esta técnica, dentro de la organización de los registros, estos se mantendran ordenados por una key dentro del archivo, por lo que en el caso de que no se encuentren el que se insertaron, se linkea cada registro con el siguiente correspondiente. Además, se tiene un archivo auxiliar en el cual se ingresan los registros que no se pueden escribir al final del archivo debido al como está ordenando el archivo.
+En esta técnica, los registros se organizan en orden ascendente por una clave dentro del archivo. Si un registro no se encuentra en el archivo principal, se vincula con el siguiente registro correspondiente. Además, hay un archivo auxiliar en el que se ingresan registros que no se pueden escribir al final del archivo principal debido a que está ordenado y no se reconstruye para evitar aumentar la complejidad de la inserción según la cantidad de registros en el archivo principal.
 <!--- >Funcionamiento de inserción, eliminación y búsqueda <--->
 Dentro de las funciones tales como inserción, eliminación y búsqueda, su funcionamiento es el siguiente.
 
 <!--- >Manejo de memoria secundaria <--->
-Al tener el archivo de registros ordenado. Existe un archivo auxiliar en el que se guardan registros que se deben insertar en el principal pero no tienen espacio, ya que es ordenado y no se realiza la reconstrucción del mismo para evitar que la complejidad de la inserción incremente acorde a la cantidad de registros en el archivo principal. Cada registro tiene un puntero hacia el siguiente registro, el cual puede estar en el principal o auxiliar. Cuando la cantidad de inserciones en el archivo auxiliar, o eliminaciones en total alcanza un límite, se realiza un refactor para reordenar todos los registros en el archivo principal.
+En las funciones de inserción, eliminación y búsqueda, el archivo principal se mantiene ordenado. Los registros tienen un puntero hacia el siguiente registro, que puede estar en el archivo principal o en el auxiliar. Cuando la cantidad de inserciones en el archivo auxiliar o eliminaciones totales alcanza un límite, se realiza una reorganización para volver a ordenar todos los registros en el archivo principal.
 
-Por lo que, la inserción se debe de realizar primero verificando que el archivo principal no tiene algún espacio vacío para insertar el nuevo registro, en el caso de que si disponga se agrega el registro, por el contrario de que no exista espacio libre, se inserta en el archivo auxiliar, y para ambos casos se actualizan los punteros para finalizar la función.
-
-Asimismo, al momento de realizar la eliminación de un registro, lo unico que cambia son los punteros de los registros, liberando espacio para que un nuevo registro sea insertado directamente al archivo principal.
+Para la inserción, primero se verifica si hay espacio disponible en el archivo principal para insertar el nuevo registro. Si es así, se agrega el registro. Si no hay espacio libre, se inserta en el archivo auxiliar y se actualizan los punteros. Para la eliminación de un registro, solo se cambian los punteros de los registros, lo que libera espacio para que un nuevo registro se pueda insertar directamente en el archivo principal.
 
 
 # **Resultados**
