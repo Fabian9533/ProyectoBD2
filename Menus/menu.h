@@ -11,7 +11,7 @@
 #include "meta_menu.h"
 #include "../Techniques/Sequential/sequential.h"
 #include "../Techniques/DynamicHash/extendibleHash.h"
-#include "pes_menu.h"
+#include "rs6_menu.h"
 
 #define salto cout << endl
 
@@ -59,7 +59,7 @@ bool esEntero(string linea)
 
 void menu_principal(Sequential<Record<char[30]>, string> &seq, ExtendibleHash<int> &eh);
 
-void yugioh(Sequential<Record<char[30]>, string> &seq)
+void rs6(Sequential<Record<char[30]>, string> &seq)
 {
     string input;
     int opcion;
@@ -67,7 +67,7 @@ void yugioh(Sequential<Record<char[30]>, string> &seq)
     do
     {
         cout << "\e[1;1H\e[2J";
-        cout << "Elegiste la tabla Yu-Gi-Oh" << endl;
+        cout << "Elegiste la tabla RS6" << endl;
         salto;
         cout << "¿Que accion quieres realizar?" << endl;
         cout << "-> Elige un numero" << endl;
@@ -125,7 +125,7 @@ void yugioh(Sequential<Record<char[30]>, string> &seq)
         exit(-1);
         break;
     default:
-        yugioh(seq);
+        rs6(seq);
         break;
     }
 }
@@ -220,7 +220,7 @@ cout<<" " << endl;
             cout << "-> Elige un numero" << endl;
             salto;
             salto;
-            cout << "1. Yu-Gi-Oh! - Secuencial" << endl;
+            cout << "1. Rainbow 6 - Secuencial" << endl;
             salto;
             cout << "2. LeagueofLegends - Extendible Hash" << endl;
             salto;
@@ -239,7 +239,7 @@ cout<<" " << endl;
         switch (opcion)
         {
         case 1:
-            yugioh(seq);
+            rs6(seq);
             break;
         case 2:
             Lol(eh);

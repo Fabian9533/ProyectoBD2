@@ -8,16 +8,16 @@ using namespace std;
 template <typename TKey>
 class Record
 {
-    TKey key; //name[30]
-    int shirt_number;
-    char team_name[20];
-    char league[30];
-    char nationality[20];
-    char region[20];
-    int height;
-    int weight;
-    int age;
-    char foot[10];
+    TKey key; 
+    char player_name[30];
+    int kills;
+    int deaths;
+    int wins;
+    int losses;
+    int xp;
+    int headshots;
+    int melee_kills;
+    int games_played;
 
     long next = -1;
     char file = 'd';
@@ -25,53 +25,48 @@ class Record
 public:
     Record()
     {
-        string name = "No name";
-        string team_name = "No team_name";
-        string league = "No league";
-        string nationality = "No nationality";
-        string region = "No region";
-        string foot = "No foot";
+        string player_name = "No name";
         
-        strcpy(this->key, name.c_str());
-        strcpy(this->team_name, team_name.c_str());
-        strcpy(this->league, league.c_str());
-        strcpy(this->nationality, nationality.c_str());
-        strcpy(this->region, region.c_str());
-        strcpy(this->foot, foot.c_str());
-        this->shirt_number = 0;
-        this->height = 0;
-        this->weight = 0;
-        this->age = 0;
+        strcpy(this->player_name, player_name.c_str());
+        this->key = 0;
+        this->kills = 0;
+        this->deaths = 0;
+        this->wins = 0;
+        this->losses = 0;
+        this->xp = 0;
+        this->headshots = 0;
+        this->melee_kills = 0;
+        this->games_played = 0;
         this->next = -1;
         char file = 'd';
     }
-    Record(string name, int shirt_number, string team_name, string league, string nationality, string region, int height, int weight, int age, string foot)
+    Record(int key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
     {
-        strcpy(this->key, name.c_str());
-        strcpy(this->team_name, team_name.c_str());
-        strcpy(this->league, league.c_str());
-        strcpy(this->nationality, nationality.c_str());
-        strcpy(this->region, region.c_str());
-        strcpy(this->foot, foot.c_str());
-        this->shirt_number = shirt_number;
-        this->height = height;
-        this->weight = weight;
-        this->age = age;
+        this->key = key;
+        strcpy(this->player_name, player_name.c_str());
+        this->kills = kills;
+        this->deaths = deaths;
+        this->wins = wins;
+        this->losses = losses;
+        this->xp = xp;
+        this->headshots = headshots;
+        this->melee_kills = melee_kills;
+        this->games_played = games_played;
         this->next = -1;
         char file = 'd';
     }
-    void setData(string name, int shirt_number, string team_name, string league, string nationality, string region, int height, int weight, int age, string foot)
+    void setData(int key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
     {
-        strcpy(this->key, name.c_str());
-        strcpy(this->team_name, team_name.c_str());
-        strcpy(this->league, league.c_str());
-        strcpy(this->nationality, nationality.c_str());
-        strcpy(this->region, region.c_str());
-        strcpy(this->foot, foot.c_str());
-        this->shirt_number = shirt_number;
-        this->height = height;
-        this->weight = weight;
-        this->age = age;
+        this->key = key;
+        strcpy(this->player_name, player_name.c_str());
+        this->kills = kills;
+        this->deaths = deaths;
+        this->wins = wins;
+        this->losses = losses;
+        this->xp = xp;
+        this->headshots = headshots;
+        this->melee_kills = melee_kills;
+        this->games_played = games_played;
         this->next = -1;
         char file = 'd';
     }
@@ -79,15 +74,15 @@ public:
     void showData()
     {
         cout << "Key: " << key << "\n";
-        cout << "Shirt Number: " << shirt_number << "\n";
-        cout << "Team Name: " << team_name << "\n";
-        cout << "League: " << league << "\n";
-        cout << "Nationality: " << nationality << "\n";
-        cout << "Region: " << region << "\n";
-        cout << "Height: " << height << "\n";
-        cout << "Weight: " << weight << "\n";
-        cout << "Age: " << age << "\n";
-        cout << "Foot: " << foot << "\n";
+        cout << "Player Name: " << player_name << "\n";
+        cout << "Kills: " << kills << "\n";
+        cout << "Deaths: " << deaths << "\n";
+        cout << "Wins: " << wins << "\n";
+        cout << "Losses: " << losses << "\n";
+        cout << "XP: " << xp << "\n";
+        cout << "Headshots: " << headshots << "\n";
+        cout << "Melee Skills: " << melee_kills << "\n";
+        cout << "Games Played: " << games_played << "\n";
         cout << "Next : " << next << "\n";
         cout << "NextFile : " << file << "\n\n";
     }
@@ -110,28 +105,19 @@ public:
     }
     Record &operator=(const Record &a)
     {
-        for (int i = 0; i < 30; i++)
-            this->key[i] = a.key[i];
+        this->key = a.key;
 
-        for (int i = 0; i < 20; i++)
-            this->team_name[i] = a.team_name[i];
+        for (int i = 0; i < 30; i++)
+            this->player_name[i] = a.player_name[i];
             
-        for (int i = 0; i < 30; i++)
-            this->league[i] = a.league[i];
-        
-        for (int i = 0; i < 20; i++)
-            this->nationality[i] = a.nationality[i];
-        
-        for (int i = 0; i < 20; i++)
-            this->region[i] = a.region[i];
-        
-        for (int i = 0; i < 10; i++)
-            this->foot[i] = a.foot[i];
-
-        this->shirt_number = a.shirt_number;
-        this->height = a.height;
-        this->weight = a.weight;
-        this->age = a.age;
+        this->kills = a.kills;
+        this->deaths = a.deaths;
+        this->wins = a.wins;
+        this->losses = a.losses;
+        this->xp = a.xp;
+        this->headshots = a.headshots;
+        this->melee_kills = a.melee_kills;
+        this->games_played = a.games_played;
         this->next = a.next;
         this->file = a.file;
         return *this;
@@ -147,10 +133,10 @@ public:
     {
         if (cont == 1)
         {
-            cout << setw(5) << "N°" << setw(30) << "Key" << setw(10) << "Shirt Number" << setw(22) << "Team Name" << setw(33) << "League" << setw(22) << "Nationality" << setw(22) << "Region" << setw(10) << "Height" << setw(10) << "Weight" << setw(10) << "Age" << setw(12) << "Foot"
+            cout << setw(5) << "N°" << setw(5) << "Key" << setw(30) << "Player Name" << setw(6) << "Kills" << setw(6) << "Deaths" << setw(6) << "Wins" << setw(6) << "Losses" << setw(10) << "XP" << setw(6) << "Headshots" << setw(6) << "Melee Kills" << setw(6) << "Games Played"
                  << "\n";
         }
-        cout << setw(5) << cont << setw(30) << key <<setw(10) << shirt_number << setw(22) << team_name << setw(33) << league << setw(22) << nationality << setw(22) << region << setw(10) << height << setw(10) << weight << setw(10) << age << setw(12) << foot << "\n";
+        cout << setw(5) << cont << setw(5) << key <<setw(30) << player_name << setw(6) << kills << setw(6) << deaths << setw(6) << wins << setw(6) << losses << setw(10) << xp << setw(6) << headshots << setw(6) << melee_kills << setw(6) << games_played << "\n";
     }
 };
 

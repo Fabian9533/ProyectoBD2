@@ -1,10 +1,10 @@
-#ifndef PES_MENU_H
-#define PES_MENU_H
+#ifndef RS6_MENU_H
+#define RS6_MENU_H
 
 #include "../Techniques/Sequential/sequential.h"
 #include <stdio.h>
 #include <time.h>
-#define NOMBRE_ARCHIVO_PES "pes2021-all-players.csv"
+#define NOMBRE_ARCHIVO_RS6 "rs6_clean.csv"
 
 using namespace std;
 
@@ -52,7 +52,7 @@ bool esEntero_p(string linea)
 void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
 
-    ifstream archivo(NOMBRE_ARCHIVO_PES);
+    ifstream archivo(NOMBRE_ARCHIVO_RS6);
     string linea;
     char delimitador = ',';
     // Leemos la primea linea para descartarla, pues es el encabezado
@@ -64,34 +64,54 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
 
     while (getline(archivo, linea))
     {
-        int height = 0;
-        int weight = 0;
-        int age = 0;
-        int shirt_number = 0;
+        int id = 0;
+        int kills = 0;
+        int deaths = 0;
+        int wins = 0;
+        int losses = 0;
+        int xp = 0;
+        int headshots = 0;
+        int melee_kills = 0;
+        int games_played = 0;
 
         stringstream stream(linea); //Convertir la cadena a un stream
-        string Name, Team_name, League, Nationality, Region, Height, Weight, Age, Foot;
+        string Id, Player_name, Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played;
         //Extraer todos los valores
-    
-        getline(stream, Name, delimitador);
-        getline(stream, Team_name, delimitador);
-        getline(stream, League, delimitador);
-        getline(stream, Nationality, delimitador);
-        getline(stream, Region, delimitador);
-        getline(stream, Foot, delimitador);
 
-        stringstream _height(height);
-        stringstream _weight(weight);
-        stringstream _age(age);
-        stringstream _shirt(shirt_number);
+        getline(stream, Id, delimitador);
 
-        _height >> height;
-        _weight >> weight;
-        _age >> age;
-        _shirt >> shirt_number;
+        getline(stream, Player_name, delimitador);
+        getline(stream, Kills, delimitador);
+        getline(stream, Deaths, delimitador);
+        getline(stream, Wins, delimitador);
+        getline(stream, Losses, delimitador);
+        getline(stream, Xp, delimitador);
+        getline(stream, Headshots, delimitador);
+        getline(stream, Melee_kills, delimitador);
+        getline(stream, Games_played, delimitador);
 
-        Record<char[30]> temp(Name, shirt_number, Team_name, League, Nationality, Region, height, weight, age, Foot);
+        stringstream _id(Id);
+        stringstream _kills(Kills);
+        stringstream _deaths(Deaths);
+        stringstream _wins(Wins);
+        stringstream _losses(Losses);
+        stringstream _xp(Xp);
+        stringstream _heahshots(Headshots);
+        stringstream _meleekills(Melee_kills);
+        stringstream _gamesplayed(Games_played);
 
+        _id >> Id;
+        _kills >> Kills;
+        _deaths >> Deaths;
+        _wins >> Wins;
+        _losses >> Losses;
+        _xp >> Xp;
+        _heahshots >> Headshots;
+        _meleekills >> Melee_kills;
+        _gamesplayed >> Games_played;
+        
+
+        Record<char[30]> temp(id, Player_name, kills, deaths, wins, losses, xp , headshots, melee_kills, games_played);
         //guardar en vector
         records.push_back(temp);
     }
@@ -157,37 +177,32 @@ void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq)
 void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
 {
     cout << "\n\n----------Insertar----------\n\n";
-    string name;
-    string team_name;
-    string league;
-    string nationality;
-    string region;
-    string foot;
+    string player_name;
     clock_t t;
-    int shirt_number, height, weight, age;
+    int Id, Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played;
 
+
+    cout << "Ingrese el id: ";
+    cin >> Id;
     cout << "Ingrese el Nombre del jugador (30 carac. max): ";
-    cin >> name;
-    cout << "Ingrese el Nombre del equipo (20 carac. max): ";
-    cin >> team_name;
-    cout << "Ingrese la liga (30 carac. max): ";
-    cin >> league;
-    cout << "Ingrese la nacionalidad (20 carac. max): ";
-    cin >> nationality;
-    cout << "Ingrese la region (20 carac. max): ";
-    cin >> region;
-    cout << "Ingrese el pie (10 carac. max): ";
-    cin >> foot;
-    cout << "Ingrese el numero de camiseta: ";
-    cin >> shirt_number;
-    cout << "Ingrese la altura: ";
-    cin >> height;
-    cout << "Ingrese el peso: ";
-    cin >> weight;
-    cout << "Ingrese la edad: ";
-    cin >> age;
+    cin >> player_name;
+    cout << "Ingrese el numero de asesinatos: ";
+    cin >> Kills;
+    cout << "Ingrese el numero de muertes: ";
+    cin >> Deaths;
+    cout << "Ingrese el numero de partidas ganadas: ";
+    cin >> Wins;
+    cout << "Ingrese el numero de partidas perdidas: ";
+    cin >> Losses;
+    cout << "Ingrese la experiencia: ";
+    cin >> Xp;
+    cout << "Ingrese el numero de muertes a melee: ";
+    cin >> Melee_kills;
+    cout << "Ingrese el numero de partidas jugadas: ";
+    cin >> Games_played;
+   
     t = clock();
-    Record<char[30]> rec(name, shirt_number, toLower(team_name), toLower(league),toLower(nationality), toLower(region), height, weight, age, toLower(foot));
+    Record<char[30]> rec(Id, toLower(player_name),Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played);
     int accesos = 0;
     seq.insert(rec, accesos);
 
