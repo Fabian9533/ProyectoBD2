@@ -262,4 +262,132 @@ void showData(Sequential<Record<char[30]>, string> &seq)
     dump();
 }
 
+ 
+vector<string> split_query(const string& query) {
+    vector<string> tokens;
+    stringstream ss(query);
+    string token;
+    while (getline(ss, token, ' ')) {
+        if (!token.empty()) {
+            tokens.push_back(token);
+        }
+    }
+    return tokens;
+}
+
+
+void insertar_parser_secuencial(Sequential<Record<char[30]>, string> &seq){
+    string query;
+    cout << "Ingrese la sentencia SQL: ";
+    getline(cin, query);
+    vector<string> tokens = split_query(query);
+    if (tokens[0] == "select"){
+        if (tokens[1] == "*" && tokens[2] == "from" && tokens[4] != "where"){
+            seq.showRecords();
+            dump();
+        } else {
+            string nombre;
+            int accesos = 0;
+            //encontrar el valor de nombre entre las comillas simple de la sentencia/query y pasarlo a la variable nombre
+            for (int i = 0; i < query.size(); i++){
+                if (query[i] == '\''){
+                    for (int j = i+1; j < query.size(); j++){
+                        if (query[j] == '\''){
+                            nombre = query.substr(i+1, j-i-1);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            cout << "Nombre: " << nombre << "\n";
+
+            auto result = seq.search(toLower(nombre), accesos);
+            if (result)
+            {
+                (*result).showRecord(1);
+                cout << "Accesos a memoria secundaria: " << accesos << endl;
+            }
+            else
+            {
+                cout << "No se encontro " << nombre << "\n";
+            }
+            dump();
+        }
+    } else if (tokens[0] == "select" && tokens[6] == "between"){
+        string key1, key2;
+        clock_t t;
+        key1 = tokens[7];
+        key2 = tokens[9];
+        if (key1 > key2)
+        {
+            auto t = key1;
+            key1 = key2;
+            key2 = t;
+        }
+
+        t = clock();
+        auto result = seq.search(toLower(key1), toLower(key2));
+        cout << "Resultados: " << result.size() << "\n";
+        int cont = 1;
+        for (auto r : result)
+        {
+            r.showRecord(cont++);
+        }
+        t = clock() - t;
+        double time_taken = ((double)t) / CLOCKS_PER_SEC; // calculate the  elapsed time
+        cout << endl;
+        printf("El programa tomo %f segundos en buscar el rango de registros", time_taken);
+        dump();
+    } else if (tokens[0] == "insert") {
+        // Extraer los valores necesarios de la consulta
+        size_t index1 = query.find("(");
+        size_t index2 = query.find(")");
+        string columns_str = query.substr(index1 + 1, index2 - index1 - 1);
+        string values_str = query.substr(query.find("(", index2) + 1, query.find(")", index2) - query.find("(", index2) - 1);
+
+        string subtipo;
+        int nivel, ataque, defensa;
+
+        vector<string> column_names;
+        stringstream ss(columns_str);
+        string column_name;
+        while (getline(ss, column_name, ',')) {
+            column_names.push_back(column_name);
+        }
+
+        vector<string> values;
+        stringstream ss2(values_str);
+        string value;
+        while (getline(ss2, value, ',')) {
+            values.push_back(value);
+        }
+        clock_t t;
+        t = clock();
+        nivel = stoi(values[2]);
+        ataque = stoi(values[3]);
+        defensa = stoi(values[4]);
+        Record<char[30]> rec(toLower(values[0]), toLower(values[1]),toLower(subtipo), nivel, ataque, defensa);
+        int accesos = 0;
+        seq.insert(rec, accesos);
+
+        t = clock() - t;
+        double time_taken = ((double)t) / CLOCKS_PER_SEC; // calculate the elapsed time
+        cout << endl;
+        printf("El programa tomo %f segundos en insertar el registro", time_taken);
+        printf("\nEl programa tomo %d accesos a memoria secundaria", accesos);
+
+        dump();
+    } else if (tokens[0] == "delete") {
+        string nombre = tokens[2];
+        int accesos = 0;
+        seq.erase(toLower(nombre));
+        dump();
+    } else {
+        cout << "Sentencia no reconocida\n";
+        dump();
+    }
+}
+
 #endif

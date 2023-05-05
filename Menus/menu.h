@@ -87,7 +87,9 @@ void yugioh(Sequential<Record<char[30]>, string> &seq)
         salto;
         cout << "7. Ver todos los registros" << endl;
         salto;
-        cout << "8. Salir" << endl;
+        cout << "8. Insertar sentencia en forma de parser" << endl;
+        salto;
+        cout << "9. Salir" << endl;
         salto;
 
         getline(cin, input);
@@ -122,6 +124,9 @@ void yugioh(Sequential<Record<char[30]>, string> &seq)
         showData(seq);
         break;
     case 8:
+        insertar_parser_secuencial(seq);
+        break;
+    case 9:
         exit(-1);
         break;
     default:
