@@ -40,7 +40,7 @@ public:
         this->next = -1;
         char file = 'd';
     }
-    Record(int key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
+    Record(TKey key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
     {
         this->key = key;
         strcpy(this->player_name, player_name.c_str());
@@ -55,7 +55,7 @@ public:
         this->next = -1;
         char file = 'd';
     }
-    void setData(int key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
+    void setData(TKey key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
     {
         this->key = key;
         strcpy(this->player_name, player_name.c_str());
@@ -101,7 +101,7 @@ public:
     }
     string getKey()
     {
-        return string(key);
+        return to_string(key);
     }
     Record &operator=(const Record &a)
     {
@@ -122,12 +122,12 @@ public:
         this->file = a.file;
         return *this;
     }
-    bool operator<(const Record &a) { return string(this->key) < string(a.key); }
-    bool operator>(const Record &a) { return string(this->key) > string(a.key); }
-    bool operator<=(const Record &a) { return string(this->key) <= string(a.key); }
-    bool operator>=(const Record &a) { return string(this->key) >= string(a.key); }
-    bool operator==(const Record &a) { return string(this->key) == string(a.key); }
-    bool operator!=(const Record &a) { return string(this->key) != string(a.key); }
+    bool operator<(const Record &a) { return this->key < a.key; }
+    bool operator>(const Record &a) { return this->key > a.key; }
+    bool operator<=(const Record &a) { return this->key <= a.key; }
+    bool operator>=(const Record &a) { return this->key >= a.key; }
+    bool operator==(const Record &a) { return this->key == a.key; }
+    bool operator!=(const Record &a) { return this->key != a.key; }
 
     void showRecord(int cont)
     {
