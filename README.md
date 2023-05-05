@@ -109,7 +109,7 @@ Por último, encontramos que las búsquedas por rango, son más eficientes dentr
 
 
 # **Pruebas**
-En el video: [link]([link](https://drive.google.com/drive/folders/1faJ9uAV2EO0ABUXPBB2jaawCxAzAxbSp?usp=sharing))
+En el video: [link]([carpeta](https://drive.google.com/drive/folders/1faJ9uAV2EO0ABUXPBB2jaawCxAzAxbSp?usp=sharing))
 
 
 
