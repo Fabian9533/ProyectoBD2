@@ -8,16 +8,12 @@ using namespace std;
 template <typename TKey>
 class Record
 {
-    TKey key; 
-    char player_name[30];
-    int kills;
-    int deaths;
-    int wins;
-    int losses;
-    int xp;
-    int headshots;
-    int melee_kills;
-    int games_played;
+    TKey key; //name[30]
+    char attributes[6];
+    char subtype[12];
+    int level;
+    int attack;
+    int defense;
 
     long next = -1;
     char file = 'd';
@@ -25,48 +21,38 @@ class Record
 public:
     Record()
     {
-        string player_name = "No name";
+        string name = "No name";
+        string attributes = "No attributes";
+        string subtype = "No subtype";
         
-        strcpy(this->player_name, player_name.c_str());
-        this->key = 0;
-        this->kills = 0;
-        this->deaths = 0;
-        this->wins = 0;
-        this->losses = 0;
-        this->xp = 0;
-        this->headshots = 0;
-        this->melee_kills = 0;
-        this->games_played = 0;
+        strcpy(this->key, name.c_str());
+        strcpy(this->attributes, attributes.c_str());
+        strcpy(this->subtype, subtype.c_str());
+        this->level = 0;
+        this->attack = 0;
+        this->defense = 0;
         this->next = -1;
         char file = 'd';
     }
-    Record(TKey key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
+    Record(string name, string attributes, string subtype, int level, int attack, int defense)
     {
-        this->key = key;
-        strcpy(this->player_name, player_name.c_str());
-        this->kills = kills;
-        this->deaths = deaths;
-        this->wins = wins;
-        this->losses = losses;
-        this->xp = xp;
-        this->headshots = headshots;
-        this->melee_kills = melee_kills;
-        this->games_played = games_played;
+        strcpy(this->key, name.c_str());
+        strcpy(this->attributes, attributes.c_str());
+        strcpy(this->subtype, subtype.c_str());
+        this->level = level;
+        this->attack = attack;
+        this->defense = defense;
         this->next = -1;
         char file = 'd';
     }
-    void setData(TKey key, string player_name, int kills, int deaths, int wins, int losses, int xp, int headshots, int melee_kills, int games_played)
+    void setData(string name, string attributes, string subtype, int level, int attack, bool defense)
     {
-        this->key = key;
-        strcpy(this->player_name, player_name.c_str());
-        this->kills = kills;
-        this->deaths = deaths;
-        this->wins = wins;
-        this->losses = losses;
-        this->xp = xp;
-        this->headshots = headshots;
-        this->melee_kills = melee_kills;
-        this->games_played = games_played;
+        strcpy(this->key, name.c_str());
+        strcpy(this->attributes, attributes.c_str());
+        strcpy(this->subtype, subtype.c_str());
+        this->level = level;
+        this->attack = attack;
+        this->defense = defense;
         this->next = -1;
         char file = 'd';
     }
@@ -74,15 +60,11 @@ public:
     void showData()
     {
         cout << "Key: " << key << "\n";
-        cout << "Player Name: " << player_name << "\n";
-        cout << "Kills: " << kills << "\n";
-        cout << "Deaths: " << deaths << "\n";
-        cout << "Wins: " << wins << "\n";
-        cout << "Losses: " << losses << "\n";
-        cout << "XP: " << xp << "\n";
-        cout << "Headshots: " << headshots << "\n";
-        cout << "Melee Skills: " << melee_kills << "\n";
-        cout << "Games Played: " << games_played << "\n";
+        cout << "Atributos: " << attributes << "\n";
+        cout << "Sub-Tipo: " << subtype << "\n";
+        cout << "Level: " << level << "\n";
+        cout << "Puntos de Ataque: " << attack << "\n";
+        cout << "Puntos de Defensa: " << defense << "\n";
         cout << "Next : " << next << "\n";
         cout << "NextFile : " << file << "\n\n";
     }
@@ -101,42 +83,41 @@ public:
     }
     string getKey()
     {
-        return to_string(key);
+        return string(key);
     }
     Record &operator=(const Record &a)
     {
-        this->key = a.key;
-
         for (int i = 0; i < 30; i++)
-            this->player_name[i] = a.player_name[i];
+            this->key[i] = a.key[i];
+
+        for (int i = 0; i < 6; i++)
+            this->attributes[i] = a.attributes[i];
             
-        this->kills = a.kills;
-        this->deaths = a.deaths;
-        this->wins = a.wins;
-        this->losses = a.losses;
-        this->xp = a.xp;
-        this->headshots = a.headshots;
-        this->melee_kills = a.melee_kills;
-        this->games_played = a.games_played;
+        for (int i = 0; i < 12; i++)
+            this->subtype[i] = a.subtype[i];
+
+        this->level = a.level;
+        this->attack = a.attack;
+        this->defense = a.defense;
         this->next = a.next;
         this->file = a.file;
         return *this;
     }
-    bool operator<(const Record &a) { return this->key < a.key; }
-    bool operator>(const Record &a) { return this->key > a.key; }
-    bool operator<=(const Record &a) { return this->key <= a.key; }
-    bool operator>=(const Record &a) { return this->key >= a.key; }
-    bool operator==(const Record &a) { return this->key == a.key; }
-    bool operator!=(const Record &a) { return this->key != a.key; }
+    bool operator<(const Record &a) { return string(this->key) < string(a.key); }
+    bool operator>(const Record &a) { return string(this->key) > string(a.key); }
+    bool operator<=(const Record &a) { return string(this->key) <= string(a.key); }
+    bool operator>=(const Record &a) { return string(this->key) >= string(a.key); }
+    bool operator==(const Record &a) { return string(this->key) == string(a.key); }
+    bool operator!=(const Record &a) { return string(this->key) != string(a.key); }
 
     void showRecord(int cont)
     {
         if (cont == 1)
         {
-            cout << setw(5) << "N°" << setw(5) << "Key" << setw(30) << "Player Name" << setw(6) << "Kills" << setw(6) << "Deaths" << setw(6) << "Wins" << setw(6) << "Losses" << setw(10) << "XP" << setw(6) << "Headshots" << setw(6) << "Melee Kills" << setw(6) << "Games Played"
+            cout << setw(5) << "N°" << setw(30) << "Key" << setw(8) << "Attributes" << setw(13) << "SubType" << setw(10) << "Level" << setw(10) << "Attack" << setw(10) << "Defense"
                  << "\n";
         }
-        cout << setw(5) << cont << setw(5) << key <<setw(30) << player_name << setw(6) << kills << setw(6) << deaths << setw(6) << wins << setw(6) << losses << setw(10) << xp << setw(6) << headshots << setw(6) << melee_kills << setw(6) << games_played << "\n";
+        cout << setw(5) << cont << setw(30) << key <<setw(8) << attributes << setw(13) << subtype << setw(10) << level << setw(10) << attack << setw(10) << defense << "\n";
     }
 };
 
