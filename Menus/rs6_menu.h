@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq);
+void post_insertar_aleatorio(Sequential<Record<int>, string> &seq);
 
 bool esEntero_p(string linea)
 {
@@ -49,7 +49,7 @@ bool esEntero_p(string linea)
     return esEntero;
 }
 
-void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
+void insertar_secuencial(Sequential<Record<int>, string> &seq)
 {
 
     ifstream archivo(NOMBRE_ARCHIVO_RS6);
@@ -57,7 +57,7 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
     char delimitador = ',';
     // Leemos la primea linea para descartarla, pues es el encabezado
     getline(archivo, linea);
-    vector<Record<char[30]>> records;
+    vector<Record<int>> records;
 
     // Leemos todos las linea
     clock_t t;
@@ -111,7 +111,7 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
         _gamesplayed >> Games_played;
         
 
-        Record<char[30]> temp(id, Player_name, kills, deaths, wins, losses, xp , headshots, melee_kills, games_played);
+        Record<int> temp(id, Player_name, kills, deaths, wins, losses, xp , headshots, melee_kills, games_played);
         //guardar en vector
         records.push_back(temp);
     }
@@ -126,7 +126,7 @@ void insertar_secuencial(Sequential<Record<char[30]>, string> &seq)
     post_insertar_aleatorio(seq);
 }
 
-void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq)
+void post_insertar_aleatorio(Sequential<Record<int>, string> &seq)
 {
 
     string input;
@@ -174,7 +174,7 @@ void post_insertar_aleatorio(Sequential<Record<char[30]>, string> &seq)
     }
     dump();
 }
-void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
+void insertar_registro_secuencial(Sequential<Record<int>, string> &seq)
 {
     cout << "\n\n----------Insertar----------\n\n";
     string player_name;
@@ -202,7 +202,7 @@ void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
     cin >> Games_played;
    
     t = clock();
-    Record<char[30]> rec(Id, toLower(player_name),Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played);
+    Record<int> rec(Id, toLower(player_name),Kills, Deaths, Wins, Losses, Xp, Headshots, Melee_kills, Games_played);
     int accesos = 0;
     seq.insert(rec, accesos);
 
@@ -215,7 +215,7 @@ void insertar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
     dump();
 }
 
-void buscar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
+void buscar_registro_secuencial(Sequential<Record<int>, string> &seq)
 {
     cout << "\n\n----------Busqueda----------\n\n";
     cout << "Ingrese nombre a buscar: ";
@@ -241,7 +241,7 @@ void buscar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
     }
     dump();
 }
-void buscar_rango_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
+void buscar_rango_registro_secuencial(Sequential<Record<int>, string> &seq)
 {
     cout << "\n\n----------Busqueda por rango----------\n\n";
     string key1, key2;
@@ -272,7 +272,7 @@ void buscar_rango_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
     dump();
 }
 
-void eliminar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
+void eliminar_registro_secuencial(Sequential<Record<int>, string> &seq)
 {
     cout << "\n\n----------Eliminar----------\n\n";
     cout << "Ingrese codigo a eliminar: ";
@@ -289,7 +289,7 @@ void eliminar_registro_secuencial(Sequential<Record<char[30]>, string> &seq)
     dump();
 }
 
-void showData(Sequential<Record<char[30]>, string> &seq)
+void showData(Sequential<Record<int>, string> &seq)
 {
     seq.showRecords();
     dump();
