@@ -57,9 +57,9 @@ bool esEntero(string linea)
 }
 
 
-void menu_principal(Sequential<Record<char[30]>, string> &seq, ExtendibleHash<int> &eh);
+void menu_principal(Sequential<Record<int>, string> &seq, ExtendibleHash<int> &eh);
 
-void rs6(Sequential<Record<char[30]>, string> &seq)
+void rs6(Sequential<Record<int>, string> &seq)
 {
     string input;
     int opcion;
@@ -130,7 +130,7 @@ void rs6(Sequential<Record<char[30]>, string> &seq)
     }
 }
 
-void Lol(ExtendibleHash<int> &eh)
+void VGS(ExtendibleHash<int> &eh)
 {
     string input;
     int opcion;
@@ -138,7 +138,7 @@ void Lol(ExtendibleHash<int> &eh)
     do
     {
         cout << "\e[1;1H\e[2J";
-        cout << "Elegiste la tabla League of Legends" << endl;
+        cout << "Elegiste la tabla Video Games Sales" << endl;
         salto;
         cout << "Que accion quieres realizar?" << endl;
         cout << "-> Elige un numero" << endl;
@@ -191,12 +191,12 @@ void Lol(ExtendibleHash<int> &eh)
         exit(-1);
         break;
     default:
-        Lol(eh);
+        VGS(eh);
         break;
     }
 }
 
-void menu_principal(Sequential<Record<char[30]>, string> &seq, ExtendibleHash<int> &eh)
+void menu_principal(Sequential<Record<int>, string> &seq, ExtendibleHash<int> &eh)
 {
 
     while (1)
@@ -222,7 +222,7 @@ cout<<" " << endl;
             salto;
             cout << "1. Rainbow 6 - Secuencial" << endl;
             salto;
-            cout << "2. LeagueofLegends - Extendible Hash" << endl;
+            cout << "2. Video Games Sales - Extendible Hash" << endl;
             salto;
             cout << "3. Salir" << endl;
             salto;
@@ -242,7 +242,7 @@ cout<<" " << endl;
             rs6(seq);
             break;
         case 2:
-            Lol(eh);
+            VGS(eh);
             break;
         case 3:
             exit(-1);
