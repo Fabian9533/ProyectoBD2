@@ -281,7 +281,7 @@ void insertar_parser_secuencial(Sequential<Record<char[30]>, string> &seq){
     cout << "Ingrese la sentencia SQL: ";
     getline(cin, query);
     vector<string> tokens = split_query(query);
-    if (tokens[0] == "select"){
+    if (tokens[0] == "select" && tokens[6] != "between"){
         if (tokens[1] == "*" && tokens[2] == "from" && tokens[4] != "where"){
             seq.showRecords();
             dump();

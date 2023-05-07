@@ -252,24 +252,13 @@ void eliminar_registro_hash(ExtendibleHash<int> &eh)
 
     dump();
 }
-vector<string> split_query(const string& query) {
-    vector<string> tokens;
-    stringstream ss(query);
-    string token;
-    while (getline(ss, token, ' ')) {
-        if (!token.empty()) {
-            tokens.push_back(token);
-        }
-    }
-    return tokens;
-}
 
 void insertar_parser_hash(ExtendibleHash<int> &eh){
     string query;
     cout << "Ingrese la sentencia SQL: ";
     getline(cin, query);
     vector<string> tokens = split_query(query);
-    if (tokens[0] == "select"){
+    if (tokens[0] == "select" && tokens[6] != "between"){
         if (tokens[1] == "*" && tokens[2] == "from" && tokens[4] != "where"){
             eh.showRecords();
             dump();
